@@ -52,5 +52,11 @@ def math(request, a, b):
 #	c = template.Context({'s':s, 'd':d, 'p':p, 'q':q})
 #	return HttpResponse(t.render(c))
 
-		#get_template 
-	return render_to_response('math.html',{'s':s, 'd':d, 'p':p, 'q':q})
+		#get_template + Context+render + HttpResponse = render_to_response 
+#	return render_to_response('math.html',{'s':s, 'd':d, 'p':p, 'q':q})
+
+                #使用locals函數 傳送區域變數
+        #local_dic = locals()
+        #print local_dic['s']        #印出s的內容(字串)
+	return render_to_response('math.html', locals())
+

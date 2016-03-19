@@ -17,7 +17,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from mysite.views import here, math
 #from views import here
-#mysite 是指子mysite 
+#mysite 是指子mysite
+from restaurants.views import menu
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,5 +26,6 @@ urlpatterns = [
     #\{1,2}代表匹配 1 or 2 個數字
     #小括號中的字->參數 (2~n+1)個參數 第1個參數為HttpRequest
     url(r'^(\d{1,2})/plus/(\d{1,2})/$', math),
+    url(r'^menu/$', menu),
 
 ]
