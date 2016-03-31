@@ -27,33 +27,38 @@
 	    </div>
 	 </div>
     </nav>
+
     <div class="container">
+
 	<div class="menus">
-	    <p>
+	<p>
+	<div class="location">
+    		現在位置{{ path }}
+	</div>
         {% for r in restaurants %}
-	<h2>{{ r.name }}</h2>
-	{% if r.food_set.all %}
-	<p> 共有{{ r.food_set.all|length }}道 </p>
-	<table class="table">
-		<tr>
-		    <th> 名稱</th>
-		    <th> 價格</th>
-		    <th> 說明</th>
-		    <th> 辣？</th>
-		</tr>
-	{% for food in r.food_set.all %}
-		<tr>
-			<td> {{ food.name}} </td>
-			<td> {{ food.price}} </td>
-			<td> {{ food.comment }} </td>
-			<td> {% if food.is_spicy %} 辣 {% else %}
-		       				    不辣 {% endif %} </td>
-		</tr>
-		{% endfor %}
-	</table>
-        {% else %}
-            <p> Empty! </p>
-        {% endif %}
+		<h2>{{ r.name }}</h2>
+		{% if r.food_set.all %}
+		<p> 共有{{ r.food_set.all|length }}道 </p>
+		<table class="table">
+			<tr>
+			    <th> 名稱</th>
+			    <th> 價格</th>
+			    <th> 說明</th>
+			    <th> 辣？</th>
+			</tr>
+			{% for food in r.food_set.all %}
+			<tr>
+				<td> {{ food.name}} </td>
+				<td> {{ food.price}} </td>
+				<td> {{ food.comment }} </td>
+				<td> {% if food.is_spicy %} 辣 {% else %}
+							    不辣 {% endif %} </td>
+			</tr>
+			{% endfor %}
+		</table>
+        	{% else %}
+            		<p> Empty! </p>
+        	{% endif %}
 	{% endfor %}
 	</div>
 	</div>

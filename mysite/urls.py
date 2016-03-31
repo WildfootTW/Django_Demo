@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from mysite.views import here, math
+from mysite.views import here, math, meta
 #from views import here
 #mysite 是指子mysite
 from restaurants.views import menu
@@ -27,5 +27,5 @@ urlpatterns = [
     #小括號中的字->參數 (2~n+1)個參數 第1個參數為HttpRequest
     url(r'^(\d{1,2})/plus/(\d{1,2})/$', math),
     url(r'^menu/$', menu),
-
+    url(r'^meta/$', meta),
 ]

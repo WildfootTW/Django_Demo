@@ -60,3 +60,10 @@ def math(request, a, b):
         #print local_dic['s']        #印出s的內容(字串)
 	return render_to_response('math.html', locals())
 
+def meta(request):
+	values = request.META.items()
+	#values.sort()
+	html = []
+	for k, v in values:
+		html.append('<tr><td>{0}</td><td>{1}</td></tr>'.format(k, v))
+	return HttpResponse('<table>{0}</table>'.format('\n'.join(html)))

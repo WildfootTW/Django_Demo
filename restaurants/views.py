@@ -12,5 +12,6 @@ def menu(request):
 #    food2 = {
 #            'name' : '蒜泥白肉','price' : 100,'comment' : '人氣','is_spicy' : False}
 #    foods = [food1, food2]
+    path = request.path
     restaurants = Restaurant.objects.all()
     return render_to_response('menu.html', locals())
