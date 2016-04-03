@@ -1,5 +1,5 @@
 from django.contrib import admin
-from restaurants.models import Restaurant, Food
+from restaurants.models import Restaurant, Food, Comment
 
 class RestaurantAdmin(admin.ModelAdmin):
 	#fields = ('name', 'phone_number')
@@ -11,6 +11,6 @@ class FoodAdmin(admin.ModelAdmin):
 
 admin.site.register(Restaurant)
 admin.site.register(Food)
-
+admin.site.register(Comment)
 
 

@@ -1,0 +1,3 @@
+from app.models import Restaurant, Food
+r1 = Restaurant.objects.all()
+rt = Restaurant.objects.get(id=1)

@@ -67,3 +67,10 @@ def meta(request):
 	for k, v in values:
 		html.append('<tr><td>{0}</td><td>{1}</td></tr>'.format(k, v))
 	return HttpResponse('<table>{0}</table>'.format('\n'.join(html)))
+
+def welcome(request):
+    if 'user_name' in request.GET and request.GET['user_name'] != '':
+        return HttpResponse('Welcome!~'+request.GET['user_name'])
+    else:
+        return render_to_response('welcome.html',locals())
+
