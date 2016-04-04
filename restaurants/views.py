@@ -35,16 +35,28 @@ def comment (request, id):
         r = Restaurant.objects.get(id=id)
     else:
         return HttpResponseRedirect("/restaurants_list/")
+    #error = False
+    errors = []
     if request.POST:
         visitor = request.POST['visitor']
         content = request.POST['content']
         email = request.POST['email']
         date_time = timezone.localtime(timezone.now())
-        Comment.objects.create(
-                visitor=visitor,
-                email=email,
-                content=content,
-                date_time=date_time,
-                restaurant=r
-        )
-    return render_to_response('comments.html', RequestContext(request, locals()))
+        #error = any(not request.POST[k] for k in request.POST)
+        if any(not request.POST[k] for k in request.POST):
+            errors.append('*有空白欄位')
+        if '@' not in email:
+            #error = True
+            errors.append('* email格式不正確')
+        if not errors:
+            Comment.objects.create(
+                    visitor=visitor,
+                    email=email,
+                    content=content,
+                    date_time=date_time,
+                    restaurant=r
+            )
+            visitor = '' 
+            email = ''
+            content = ''
+        return render_to_response('comments.html', RequestContext(request, locals()))
