@@ -74,3 +74,4 @@ def welcome(request):
     else:
         return render_to_response('welcome.html',locals())
 
+
