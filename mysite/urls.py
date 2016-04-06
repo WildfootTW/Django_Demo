@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+<<<<<<< HEAD
 from mysite.views import here, math, meta, welcome, get_c, set_c, session_test
+=======
+from mysite.views import here, math, meta, welcome, session_S
+>>>>>>> 42f1804a700c71e91b9a4a6459573be91d1e4d39
 #from views import here
 #mysite 是指子mysite
 from restaurants.views import menu, list_restaurants, foods, comment
@@ -32,7 +36,11 @@ urlpatterns = [
     url(r'^restaurants_list/$', list_restaurants),
     url(r'^foods/$', foods),
     url(r'^comment/(\d{1,5})/$', comment),
+<<<<<<< HEAD
     url(r'^get_cookies/$', get_c),
     url(r'^set_cookies/$', set_c),
     url(r'^session/$', session_test),
+=======
+    url(r'^session/$', session_S),
+>>>>>>> 42f1804a700c71e91b9a4a6459573be91d1e4d39
 ]

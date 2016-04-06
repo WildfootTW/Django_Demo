@@ -75,6 +75,7 @@ def welcome(request):
     else:
         return render_to_response('welcome.html',locals())
 
+<<<<<<< HEAD
 def set_c(request):
     response = HttpResponse('Set your lucky_number as 7')
     response.set_cookie('lucky_number',7)
@@ -100,3 +101,15 @@ def session_test(request):
     s_info = 'Session ID:' + sid + '<br>Expire_date:' + str(s.expire_date) + '<br>Data:' + str(s.get_decoded())
     return HttpResponse(s_info)
 
+=======
+def session_S(request):
+#   request.session['sid'] = '77'
+#   s_info = request.session['sid']
+    
+    request.session['sid'] = '77'
+    request.session['sidd'] = '888'
+    sid = request.session.session_key
+    s = Session.objects.get(pk=sid)
+    s_info = 'Session ID:' + sid + '<br>Expire_date:' + str(s.expire_date) + '<br>Data:' + str(s.get_decoded())
+    return HttpResponse(s_info)
+>>>>>>> 42f1804a700c71e91b9a4a6459573be91d1e4d39
