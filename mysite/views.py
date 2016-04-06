@@ -4,6 +4,7 @@ from django.http import HttpResponse
 #from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django import template
+from django.contrib.sessions.models import Session
 
 def here(request):
 	return HttpResponse('Mother fucker?媽的法克？')
@@ -74,4 +75,28 @@ def welcome(request):
     else:
         return render_to_response('welcome.html',locals())
 
+def set_c(request):
+    response = HttpResponse('Set your lucky_number as 7')
+    response.set_cookie('lucky_number',7)
+    return response
+
+def get_c(request):
+    if 'lucky_number' in request.COOKIES:
+        return HttpResponse('your lucky_number is {0}'.format(request.COOKIES['lucky_number']))
+    else:
+        return HttpResponse('No cookies.')
+
+def use_session(request):
+    request.session['lucky_number'] = 11
+    if 'lucky_number' in request.session:
+        lucky_number = request.session['lucky_number']
+        response = HttpResponse(lucky_number)
+    del request.session['lucky_number']
+    return response
+
+def session_test(request):
+    sid = request.COOKIES['sessionid']
+    s = Session.objects.get(pk=sid)
+    s_info = 'Session ID:' + sid + '<br>Expire_date:' + str(s.expire_date) + '<br>Data:' + str(s.get_decoded())
+    return HttpResponse(s_info)
 
