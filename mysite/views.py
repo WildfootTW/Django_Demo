@@ -4,6 +4,7 @@ from django.http import HttpResponse
 #from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django import template
+from django.contrib.sessions.models import Session
 
 def here(request):
 	return HttpResponse('Mother fucker?媽的法克？')
@@ -74,3 +75,13 @@ def welcome(request):
     else:
         return render_to_response('welcome.html',locals())
 
+def session_S(request):
+#   request.session['sid'] = '77'
+#   s_info = request.session['sid']
+    
+    request.session['sid'] = '77'
+    request.session['sidd'] = '888'
+    sid = request.session.session_key
+    s = Session.objects.get(pk=sid)
+    s_info = 'Session ID:' + sid + '<br>Expire_date:' + str(s.expire_date) + '<br>Data:' + str(s.get_decoded())
+    return HttpResponse(s_info)
