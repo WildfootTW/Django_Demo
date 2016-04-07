@@ -8,6 +8,7 @@ from django.contrib.sessions.models import Session
 from django.contrib import auth
 from django.template import RequestContext
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render
 
 def here(request):
 	return HttpResponse('Mother fucker?媽的法克？')
@@ -128,11 +129,13 @@ def login(request):
             #登入狀態 = user屬性 是 user物件
             #登出狀態 = user屬性 是 anonymoususer物件
     else:
-        return render_to_response('login.html', RequestContext(request, locals()))
+        #return render_to_response('login.html', RequestContext(request, locals()))
+        return render(request, 'login.html', locals())
 
 
 def index(request):
-    return render_to_response('index.html', RequestContext(request, locals()))
+    #return render_to_response('index.html', RequestContext(request, locals()))
+    return render(request, 'index.html', locals())
 
 def logout(request):
     auth.logout(request)
