@@ -1,10 +1,13 @@
 #-*- coding: utf-8 -*-
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 #自動載入templates(failed)
 #from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django import template
 from django.contrib.sessions.models import Session
+from django.contrib import auth
+from django.template import RequestContext
+from django.contrib.auth.forms import UserCreationForm
 
 def here(request):
 	return HttpResponse('Mother fucker?媽的法克？')
@@ -75,7 +78,6 @@ def welcome(request):
     else:
         return render_to_response('welcome.html',locals())
 
-<<<<<<< HEAD
 def set_c(request):
     response = HttpResponse('Set your lucky_number as 7')
     response.set_cookie('lucky_number',7)
@@ -95,21 +97,53 @@ def use_session(request):
     del request.session['lucky_number']
     return response
 
-def session_test(request):
-    sid = request.COOKIES['sessionid']
-    s = Session.objects.get(pk=sid)
-    s_info = 'Session ID:' + sid + '<br>Expire_date:' + str(s.expire_date) + '<br>Data:' + str(s.get_decoded())
-    return HttpResponse(s_info)
-
-=======
 def session_S(request):
 #   request.session['sid'] = '77'
 #   s_info = request.session['sid']
     
-    request.session['sid'] = '77'
+    request.session['sid'] = '77'        #需要在其他頁面先執行過
     request.session['sidd'] = '888'
     sid = request.session.session_key
-    s = Session.objects.get(pk=sid)
+    s = Session.objects.get(pk=sid)      #沒先執行過request.session[] = '' 會有錯誤
     s_info = 'Session ID:' + sid + '<br>Expire_date:' + str(s.expire_date) + '<br>Data:' + str(s.get_decoded())
     return HttpResponse(s_info)
->>>>>>> 42f1804a700c71e91b9a4a6459573be91d1e4d39
+
+def login(request):
+
+    if request.user.is_authenticated():         #HttpRquest物件中包含一個user屬性
+        #如已登入 HttpRequest.user = user物件
+        #如未登入 HttpRequest.user = AnonymousUser物件
+        #is_authenticated 是否認証過用戶
+        return HttpResponseRedirect('/index/')
+
+    username = request.POST.get('username', '')     #如果POST中沒有username 填空值
+    password = request.POST.get('password', '')
+
+    user = auth.authenticate(username=username, password=password)
+            #若正確 回傳具名用戶的user物件
+            #若錯誤 回傳None
+    if user is not None and user.is_active:         #若非None該用戶可登入/is_active是否凍結
+        auth.login(request, user)               #保持登入狀態
+        return HttpResponseRedirect('/index/')
+            #登入狀態 = user屬性 是 user物件
+            #登出狀態 = user屬性 是 anonymoususer物件
+    else:
+        return render_to_response('login.html', RequestContext(request, locals()))
+
+
+def index(request):
+    return render_to_response('index.html', RequestContext(request, locals()))
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/index/')
+
+def register(request):
+    if request.method == 'post':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return HttpResponseRedirect('/accounts/login')
+    else:       #POST沒有資料
+        form = UserCreationForm()
+    return render_to_response('register.html', RequestContext(request, locals()))

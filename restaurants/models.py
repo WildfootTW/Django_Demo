@@ -28,3 +28,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ['date_time']
+        permissions = (                     #元組 包含多個元組
+            ("can_comment", "Can comment"), #元組 包含兩個元素(codename, name)
+        )
