@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 venv/
+*.swp
 *~
 =======
 # Byte-compiled / optimized / DLL files
@@ -64,4 +64,3 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
->>>>>>> 07f802d0c25e101931a267910121db5aee45fadb

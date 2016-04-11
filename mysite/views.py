@@ -9,6 +9,7 @@ from django.contrib import auth
 from django.template import RequestContext
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
+from django.contrib.auth.models import User
 
 def here(request):
 	return HttpResponse('Mother fucker?媽的法克？')
@@ -142,11 +143,16 @@ def logout(request):
     return HttpResponseRedirect('/index/')
 
 def register(request):
-    if request.method == 'post':
+    if request.POST:
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password2']
+            new_user = User.objects.create(username=username, password=password)
+            new_user.set_password(password)
+            new_user.save()
+            form = UserCreationForm()
             return HttpResponseRedirect('/accounts/login')
     else:       #POST沒有資料
         form = UserCreationForm()
-    return render_to_response('register.html', RequestContext(request, locals()))
+    return render(request, 'register.html', locals())

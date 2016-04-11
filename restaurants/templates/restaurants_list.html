@@ -13,7 +13,9 @@
                 <th>店名</th>
                 <th>電話</th>
                 <th>地址</th>
+                {% if perms.restaurants.can_comment %}
                 <th>評價</th>
+                {% endif %}
             </tr>
             {% for r in restaurants %}
                 <tr>
@@ -23,6 +25,9 @@
                     <td> {{ r.phone_number  }}</td>
                     <td> {{ r.address  }}</td>
                     <td> <a href="/comment/{{ r.id }}/"> 評論 </a> </td>
+                    {% if perms.restaurants.can_comment %}
+                    <td> <a href="/comment/{{ r.id }}/"> comment</a> </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

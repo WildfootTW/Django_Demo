@@ -8,7 +8,13 @@ from django import template
 from restaurants.models import Restaurant, Food, Comment
 from django.template import RequestContext
 from restaurants.forms import CommentForm
-	
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
+
+def user_can_comment(user):
+    return user.is_authenticated and user.has_perm('restaurants.can_comment')
+
+
 def menu(request):
 #    food1 = {
 #            'name' : '番茄炒蛋','price' : 60,'comment' : '好吃','is_spicy' : False}
@@ -19,9 +25,15 @@ def menu(request):
     restaurants = Restaurant.objects.all()
     return render_to_response('menu.html', locals())
 
+#@login_required
+#@permission_required('restaurants.can_comment', login_url='/accounts/login/')
+    #user_passes_test 自帶login_required
+#@user_passes_test(user_can_comment, login_url='/accounts/login/')
 def list_restaurants(request):
     restaurants = Restaurant.objects.all()
-    return render_to_response('restaurants_list.html', locals())
+#   if request.user.has_perm('restaurants.can_comment'):
+#       return HttpResponse('Have can_comment')
+    return render(request, 'restaurants_list.html', locals())
 
 def foods(request):
     if 'id' in request.GET and request.GET['id'] != '':
@@ -30,6 +42,7 @@ def foods(request):
     else:
         return HttpResponseRedirect("/restaurants_list/")
 #    return HttpResponse(r)
+
 
 def comment (request, id):
     if id:
@@ -55,7 +68,7 @@ def comment (request, id):
         #error = any(not request.POST[k] for k in request.POST)
     else:
         f = CommentForm(initial={'content':'無意見'})
-    return render_to_response('comments.html', RequestContext(request, locals()))
+    return render(request, 'comments.html', locals())
 """
         if any(not request.POST[k] for k in request.POST):
             errors.append('*有空白欄位')
