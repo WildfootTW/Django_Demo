@@ -19,6 +19,8 @@ from mysite.views import here, math, meta, welcome, get_c, set_c, session_S, log
 #from views import here
 #mysite 是指子mysite
 from restaurants.views import menu, list_restaurants, foods, comment
+#import restaurants.views
+#restaurants.views.menu
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
