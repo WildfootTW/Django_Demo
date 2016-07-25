@@ -31,12 +31,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '8xd29k!zwjpuytzh3p*48$7^jxx8_uye@c&k_0dh*+5fge*u9y'
+#SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 TEMPLATE_DEGUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['django.wildfoot.com.tw', 'django.wildfoot.com.tw.']
 
 
 # Application definition
